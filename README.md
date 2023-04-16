@@ -1,6 +1,6 @@
 # ShimmeringDawn
 Board bring-up i pisanje modula za Linux operativni sistem
-Buildati Linux OS
+Buildati Linux OS za NXP i.MX8 8M
   - Tokom boot runtimea iscrtati sliku
   - Pri bootanju pokrenuti testnu aplikaciju
   - omoguciti qt biblioteku u okviru Linux slike
