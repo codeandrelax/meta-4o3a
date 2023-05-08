@@ -1,4 +1,5 @@
-# ShimmeringDawn
+# StationManagerYOCTO
+
 Board bring-up i pisanje modula za Linux operativni sistem
 
 Buildati Linux OS za NXP i.MX8 8M
