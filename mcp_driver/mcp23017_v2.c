@@ -1,12 +1,12 @@
 /***************************************************************************/
 /**
- *  \file       driver.c
+ *  \file       mcp23017_v2.c
  *
- *  \details    Simple I2C driver explanation (SSD_1306 OLED Display Interface)
+ *  \details    Driver for MCP23017_v2 using I2C subsystem
  *
- *  \author     EmbeTronicX
+ *  \author     Nikola Cetic
  *
- *  \Tested with Linux raspberrypi 5.4.51-v7l+
+ *  \Tested with Linux raspberrypi 4 B
  *
  * *******************************************************************************/
 #include <linux/module.h>
@@ -445,4 +445,4 @@ module_exit(mcp23017_driver_exit);
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Nikola Cetic nikolacetic8@gmail.com");
 MODULE_DESCRIPTION("MCP23017 driver that uses I2C protocol!");
-MODULE_VERSION("1.0");
+MODULE_VERSION("1.1");
