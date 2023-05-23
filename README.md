@@ -35,3 +35,4 @@ https://variwiki.com/index.php?title=VAR-SOM-MX8M-NANO_B2QT&release=mx8mn-b2qt-k
 https://doc.qt.io/Boot2Qt/b2qt-customization.html
 https://raymii.org/s/tutorials/Yocto_boot2qt_for_the_Raspberry_Pi_4_both_Qt_6_and_Qt_5.html#toc_9
 http://www.java2s.com/Code/Cpp/Qt/Addclickedeventforpushbutton.htm
+file:///home/dami-dam/Downloads/How%20to%20use%20gpio-hog%20demo.pdf
