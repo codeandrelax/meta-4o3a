@@ -297,7 +297,7 @@ static int __init ModuleInit(void){
 		printk("Device Nr. could not be allocated!\n");
 		return -1;
 	}
-	printk("Led driver - Device Nr. Major: %d, Minor: %d was registered!\n", my_device_nr >> 20, my_device_nr && 0xfffff);
+	printk("Rotary encoder - Device Nr. Major: %d, Minor: %d was registered!\n", my_device_nr >> 20, my_device_nr && 0xfffff);
 
 	/* Create device class */
 	if((my_class = class_create(THIS_MODULE, DRIVER_CLASS)) == NULL) {
