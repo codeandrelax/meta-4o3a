@@ -30,7 +30,7 @@ int main() {
             close(ledFile);
             return 1;
         }
-        usleep(300);
+        usleep(500 000);
     }
     
     close(ledFile);
