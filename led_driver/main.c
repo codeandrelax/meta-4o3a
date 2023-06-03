@@ -5,6 +5,7 @@
 #include <linux/cdev.h>
 #include <linux/uaccess.h>
 #include <linux/delay.h>
+#include <linux/hrtimer.h>
 
 #define LED_PIN 20
 #define NUM_DEV 26
@@ -16,7 +17,7 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Nemanja Cenic and Nikola Cetic");
 MODULE_DESCRIPTION("LED driver");
 
-const int pTime = 1;
+const int pTime = 1000;
 int tCycle = pTime * 6;
 
 static char buffer[20];
@@ -25,6 +26,18 @@ int value = 0;
 static dev_t my_device_nr;
 static struct class *my_class;
 static struct cdev my_device;
+
+static struct hrtimer timer_zero;
+char timer_zero_state = 0;
+
+static enum hrtimer_restart hrtimer_zero_handler(struct hrtimer *timer) {
+	if(timer_zero_state == 0){
+		gpio_set_value(LED_PIN, 0);
+		timer_zero_state = 1;
+		hrtimer_forward_now(timer_zero, ktime_set(0, 5*pTime));
+	}
+	return HRTIMER_NORESTART;
+}
 
 static struct hrtimer hrtimer_one;
 static ktime_t ktime_one;
@@ -89,14 +102,10 @@ void writeLED(char dev_num, char red, char green, char blue)
 	waitGSLAT();
 }
 
-void writeZero(void)
-{
-	gpio_set_value(LED_PIN, 1);
-	udelay(pTime);
-	// nanosleep((const struct timespec[]){{0, pTime*1000}}, NULL);
-	gpio_set_value(LED_PIN, 0);
-	udelay(pTime * 5);
-	// nanosleep((const struct timespec[]){{0, pTime*5*1000}}, NULL);
+void writeZero(void) {
+  gpio_set_value(LED_PIN, 1);
+  timer_zero_state = 0;
+  hrtimer_start(&my_hrtimer, ns_to_ktime(pTime), HRTIMER_MODE_REL); 
 }
 
 void writeOne(void)
@@ -229,10 +238,15 @@ static int __init ModuleInit(void)
 {
 	printk("Hello, Kernel!\n");
 
+	/* Init of hrtimer */
+	hrtimer_init(&timer_zero, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
+	my_hrtimer.function = &hrtimer_zero_handler;
+
 	/* Allocate a device nr */
 	if (alloc_chrdev_region(&my_device_nr, 0, 1, DRIVER_NAME) < 0)
 	{
 		printk("Device Nr. could not be allocated!\n");
+		hrtimer_cancel(&timer_zero);
 		return -1;
 	}
 	printk("Led driver - Device Nr. Major: %d, Minor: %d was registered!\n", my_device_nr >> 20, my_device_nr && 0xfffff);
@@ -289,12 +303,14 @@ FileError:
 	class_destroy(my_class);
 ClassError:
 	unregister_chrdev_region(my_device_nr, 1);
+	hrtimer_cancel(&timer_zero);
 	return -1;
 }
 
 static void __exit ModuleExit(void)
 {
 	gpio_set_value(LED_PIN, 0);
+	hrtimer_cancel(&timer_zero);
 	gpio_free(LED_PIN);
 	cdev_del(&my_device);
 	device_destroy(my_class, my_device_nr);
