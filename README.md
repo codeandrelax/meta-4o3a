@@ -1,3 +1,30 @@
+
+# How to setup a project
+
+Follow the steps given on official Variscite [wiki](https://variwiki.com/index.php?title=B2QT_Build_Release&release=mx8mn-b2qt-kirkstone-5.15-2.0.x-v1.0) 
+
+If you experience problems while building (eg. random crashes of Linux terminal) try limiting number of parallel processes run by bitbake.
+To limit number of parallel processes edit local.conf file located in build-imx8mn-var-som/conf directory.
+Comment out the line
+```
+BB_NUMBER_THREADS ?= "${@oe.utils.cpu_count()}"
+```
+and instead put
+```
+BB_NUMBER_THREADS = "8"
+```
+where 8 represents number of processor cores used while building. The lower this number is, the more time build process will take.
+
+Comment out the line
+```
+PARALLEL_MAKE ?= "-j ${@oe.utils.cpu_count()}"
+```
+and instead put
+```
+PARALLEL_MAKE = "-j 8"
+```
+where 8 is the number of parallel processes run during build. The lower this number is, thje more time build process will take.
+Aproximately every process takes around 3GB of RAM memory, so adjust this number according to RAM memory available.
 # StationManagerYOCTO
 
 Board bring-up i pisanje modula za Linux operativni sistem
