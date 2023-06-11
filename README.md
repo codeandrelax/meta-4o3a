@@ -9,7 +9,7 @@ meta-4o3a is a layer which adds functionality of Station Manager to Linux build.
 
 # Problems during build
 
-If you experience problems while building (eg. random crashes of Linux terminal) try limiting number of parallel processes run by bitbake.
+If you experience problems during build (eg. random crashes of Linux terminal) try limiting number of parallel processes ran by bitbake.
 To limit number of parallel processes edit local.conf file located in build-imx8mn-var-som/conf directory.
 Comment out the line
 ```
