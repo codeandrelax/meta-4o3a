@@ -7,6 +7,30 @@ After the steps from previous link have been completed, clone this repository (m
 
 meta-4o3a is a layer which adds functionality of Station Manager to Linux build.
 
+It is neccessary to edit local.conf file located in build-imx8mn-var-som/conf directory.
+
+```
+IMAGE_INSTALL:append = " mycapp "
+IMAGE_INSTALL:append = " gpio-driver-test "
+IMAGE_INSTALL:append = " myqtapp "
+#IMAGE_INSTALL:append = " testapp "
+
+DISTRO_FEATURES:append = " wayland "
+IMAGE_INSTALL:append = " qtbase qtwayland "
+CORE_IMAGE_EXTRA_INSTALL += " wayland weston "
+
+IMAGE_INSTALL:append = " dami-module "
+KERNEL_MODULE_AUTOLOAD += " dami_driver "
+
+IMAGE_INSTALL:append = " gpiomodule "
+KERNEL_MODULE_AUTOLOAD += " gpio_driver "
+
+IMAGE_INSTALL:append = " rotary-module "
+KERNEL_MODULE_AUTOLOAD += " rotary_driver "
+
+IMAGE_INSTALL:append = " libgpiod libgpiod-tools "
+```
+
 # Problems during build
 
 If you experience problems during build (eg. random crashes of Linux terminal) try limiting number of parallel processes ran by bitbake.
