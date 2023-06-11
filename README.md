@@ -3,7 +3,7 @@
 
 Follow the steps given on official Variscite [wiki](https://variwiki.com/index.php?title=B2QT_Build_Release&release=mx8mn-b2qt-kirkstone-5.15-2.0.x-v1.0) 
 
-After the steps from previous link have been completed, clone this repository (main branch) into sources directory of var-b2qt (so that you get the following path: var-b2qt/sources/meta-4o3a)
+After the steps from previous link have been completed, clone this repository (main branch) into sources directory of var-b2qt (so that you get the following path var-b2qt/sources/meta-4o3a)
 
 meta-4o3a is a layer which adds functionality of Station Manager to Linux build.
 
