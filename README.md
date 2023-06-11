@@ -25,6 +25,9 @@ PARALLEL_MAKE = "-j 8"
 ```
 where 8 is the number of parallel processes run during build. The lower this number is, thje more time build process will take.
 Aproximately every process takes around 3GB of RAM memory, so adjust this number according to RAM memory available.
+
+
+
 # StationManagerYOCTO
 
 Board bring-up i pisanje modula za Linux operativni sistem
