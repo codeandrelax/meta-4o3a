@@ -1,0 +1,29 @@
+# 0 "/home/nikola/KONZOLA_ZA_UREDJAJE/ShimmeringDawn/led_driver/overlay_old.dts"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/home/nikola/KONZOLA_ZA_UREDJAJE/ShimmeringDawn/led_driver/overlay_old.dts"
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "brcm,bcm2708";
+    fragment@0 {
+        target = <&spidev0>;
+        __overlay__ {
+                status = "disabled";
+            };
+    };
+    fragment@1{
+        target = <&spi0>;
+        __overlay__{
+            #address-cells = <1>;
+            #size-cells = <0>;
+            leds: leds_strip@0 {
+                reg = <0>;
+                status = "okay";
+                compatible = "spi,led_strip";
+                spi-max-frequency = <100000>;
+            };
+        };
+    };
+};

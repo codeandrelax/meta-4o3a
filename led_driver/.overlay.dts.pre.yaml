@@ -1,0 +1,24 @@
+---
+- fragment@0:
+    target: [[!phandle 0xffffffff]]
+    __overlay__:
+      status: ["disabled"]
+  fragment@1:
+    target: [[!phandle 0xffffffff]]
+    __overlay__:
+      '#address-cells': [[0x1]]
+      '#size-cells': [[0x0]]
+      status: ["okay"]
+      tlc59731@0:
+        status: ["okay"]
+        reg: [[0x0]]
+        compatible: ["ti,tlc59731"]
+        spi-max-frequency: [[0x186a0]]
+        spi-mode: [[0x0]]
+        phandle: [[0x1]]
+  __symbols__:
+    led_strip: ["/fragment@1/__overlay__/tlc59731@0"]
+  __fixups__:
+    spidev0: ["/fragment@0:target:0"]
+    spi0: ["/fragment@1:target:0"]
+...

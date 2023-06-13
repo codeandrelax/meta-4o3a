@@ -1,0 +1,50 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/nikola/KONZOLA_ZA_UREDJAJE/ShimmeringDawn/led_driver/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+DRIVER_CLASS	main.c	/^#define DRIVER_CLASS /;"	d	file:
+DRIVER_NAME	main.c	/^#define DRIVER_NAME /;"	d	file:
+INCLUDE_VERMAGIC	main.mod.c	/^#define INCLUDE_VERMAGIC$/;"	d	file:
+KDIR	Makefile	/^KDIR ?= "\/home\/nikola\/KONZOLA_ZA_UREDJAJE\/rpi_skeleton\/linux"$/;"	m
+LED_PIN	main.c	/^#define LED_PIN /;"	d	file:
+ModuleExit	main.c	/^static void __exit ModuleExit(void)$/;"	f	typeref:typename:void __exit	file:
+ModuleInit	main.c	/^static int __init ModuleInit(void)$/;"	f	typeref:typename:int __init	file:
+NUM_DEV	main.c	/^#define NUM_DEV /;"	d	file:
+NUM_LEDS	led_test.c	/^#define NUM_LEDS /;"	d	file:
+NUM_LEDS	main.c	/^#define NUM_LEDS /;"	d	file:
+____versions	main.mod.c	/^static const struct modversion_info ____versions[]$/;"	v	typeref:typename:const struct modversion_info[]__used __section ("__versions")	file:
+all	Makefile	/^all: module dt$/;"	t
+buffer	main.c	/^static char buffer[20];$/;"	v	typeref:typename:char[20]	file:
+clean	Makefile	/^clean:$/;"	t
+driver_close	main.c	/^static int driver_close(struct inode *device_file, struct file *instance)$/;"	f	typeref:typename:int	file:
+driver_open	main.c	/^static int driver_open(struct inode *device_file, struct file *instance)$/;"	f	typeref:typename:int	file:
+driver_read	main.c	/^static ssize_t driver_read(struct file *File, char *user_buffer, size_t count, loff_t *offs)$/;"	f	typeref:typename:ssize_t	file:
+driver_write	main.c	/^static ssize_t driver_write(struct file *File, const char *user_buffer, size_t count, loff_t *of/;"	f	typeref:typename:ssize_t	file:
+dt	Makefile	/^dt: overlay.dts$/;"	t
+fops	main.c	/^static struct file_operations fops = {$/;"	v	typeref:struct:file_operations	file:
+leds	overlay.dts	/^            leds: leds_strip@0 {$/;"	l
+main	led_test.c	/^int main() {$/;"	f	typeref:typename:int
+module	Makefile	/^module:$/;"	t
+my_class	main.c	/^static struct class *my_class;$/;"	v	typeref:struct:class *	file:
+my_device	main.c	/^static struct cdev my_device;$/;"	v	typeref:struct:cdev	file:
+my_device_nr	main.c	/^static dev_t my_device_nr;$/;"	v	typeref:typename:dev_t	file:
+pTime	main.c	/^const int pTime = 1;$/;"	v	typeref:typename:const int
+pTimeOne	main.c	/^int pTimeOne = 10;\/\/ must be less than 50\/2=25$/;"	v	typeref:typename:int
+pTimeOneTolerance	main.c	/^int pTimeOneTolerance = 5;$/;"	v	typeref:typename:int
+tCycle	main.c	/^int tCycle = pTime * 50;$/;"	v	typeref:typename:int
+value	main.c	/^int value = 0;$/;"	v	typeref:typename:int
+waitEOS	main.c	/^void waitEOS(void)$/;"	f	typeref:typename:void
+waitGSLAT	main.c	/^void waitGSLAT(void)$/;"	f	typeref:typename:void
+writeCommTimer	main.c	/^void writeCommTimer(void)$/;"	f	typeref:typename:void
+writeCommand	main.c	/^void writeCommand(void)$/;"	f	typeref:typename:void
+writeData	main.c	/^void writeData(char data)$/;"	f	typeref:typename:void
+writeLED	main.c	/^void writeLED(char dev_num, char red, char green, char blue)$/;"	f	typeref:typename:void
+writeOne	main.c	/^void writeOne(void)$/;"	f	typeref:typename:void
+writeZero	main.c	/^void writeZero(void)$/;"	f	typeref:typename:void

@@ -1,0 +1,23 @@
+---
+- compatible: ["brcm,bcm2708"]
+  fragment@0:
+    target: [[!phandle 0xffffffff]]
+    __overlay__:
+      status: ["disabled"]
+  fragment@1:
+    target: [[!phandle 0xffffffff]]
+    __overlay__:
+      '#address-cells': [[0x1]]
+      '#size-cells': [[0x0]]
+      leds_strip@0:
+        reg: [[0x0]]
+        status: ["okay"]
+        compatible: ["spi,led_strip"]
+        spi-max-frequency: [[0x186a0]]
+        phandle: [[0x1]]
+  __symbols__:
+    leds: ["/fragment@1/__overlay__/leds_strip@0"]
+  __fixups__:
+    spidev0: ["/fragment@0:target:0"]
+    spi0: ["/fragment@1:target:0"]
+...
