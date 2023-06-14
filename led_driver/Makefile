@@ -8,8 +8,8 @@ all: module dt
 module:
 	make -C $(KDIR) M=$(PWD) modules
 
-dt: overlay.dts
-	dtc -@ -I dts -O dtb -o overlay.dtbo overlay.dts
+dt: tlc59731-spi.dts
+	dtc -@ -I dts -O dtb -o tlc59731-spi.dtbo tlc59731-spi.dts
 clean:
 	make -C $(KDIR) M=$(PWD) clean
-	rm -rf overlay.dtbo
+	rm -rf tlc59731-spi.dtbo

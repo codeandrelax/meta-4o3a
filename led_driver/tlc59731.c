@@ -4,12 +4,8 @@
 #include <linux/spi/spi.h>
 #include <linux/cdev.h>
 
-/* buffer to be sent*/
-const u8 zero = 0b10000000;
-const u8 one  = 0b10010000;
 
-u8 buff[64] = {one,one,zero};
-
+// driver needed variables
 static struct spi_device *spi_dev;
 
 /* Variables for device and device class */
@@ -19,20 +15,86 @@ static struct cdev my_device;
 
 #define DRIVER_NAME "tlc59731"
 #define DRIVER_CLASS "led_strip"
+//--------------------------------//
+
+
+/*-------Operation needed variables------*/
+/* buffer to be sent*/
+const u8 zero = 0b10000000;
+const u8 one  = 0b10010000;
+
+
+
+struct __attribute__((packed)) led {
+    u64 start_sequence; // 0b1000000010000000100100001001000010010000100000001001000010000000   0x8080909090809080
+    u64 red;
+    u64 green;
+    u64 blue;
+    u32 EOS;            // 0x80000000
+};
+
+
+u32 numleds;
+size_t buff_size;
+struct led *buff;
+/*---------------------------------------*/
+
+union map{
+    u64 number;
+    u8 array[8];
+};
+
+static u64 convert_number(u8 number){
+    union map map;    
+    u8 bit = 0;
+    u8 mask = 0x80;
+    for(int i = 0; i<8;i++){
+        bit = number & (mask>>i);
+        if(bit){
+            map.array[7-i] = 0b10010000;
+        }
+        else{
+            map.array[7-i] = 0b10000000;
+        }
+    }
+
+    return map.number;
+}
 
 
 ssize_t tlc59731_write(struct file * filp, const char * user_buff, size_t len, loff_t * ofp){
-    printk("writing");
-    spi_write(spi_dev,buff,3);
-    return 0;
+    u8 temp_buff[20];
+    u32 led_index;
+    u8 red,green,blue;
+    u32 to_copy = min(len,sizeof(temp_buff));
+    u32 not_copied = copy_from_user(temp_buff, user_buff, to_copy);
+    u32 diff = to_copy - not_copied;
+
+    sscanf(temp_buff,"%d %c %c %c",&led_index,&red,&green,&blue);
+
+    if(led_index < 1 || led_index >numleds)
+        return diff;
+
+    buff[led_index].red = convert_number(red);
+    buff[led_index].green = convert_number(green);
+    buff[led_index].blue = convert_number(blue);
+
+    spi_write(spi_dev,buff,buff_size);
+
+    return diff;
 }
 
 static struct file_operations fops ={
     .write = tlc59731_write
 };
 
+
 static int tlc59731_probe(struct spi_device *spi)
 {
+    struct device_node *np;
+    u32 max_speed_hz;
+    u8 mode;
+
 	printk(KERN_INFO "Probing tlc59731\n");
 
 
@@ -67,20 +129,28 @@ static int tlc59731_probe(struct spi_device *spi)
     spi_dev = spi;
 
     // Extract device tree properties
-    struct device_node *np = spi->dev.of_node;
-    u32 max_speed_hz;
-    u8 mode;
+    np = spi->dev.of_node;
+    
     if (of_property_read_u32(np, "spi-max-frequency", &max_speed_hz) ||
-        of_property_read_u8(np, "spi-mode", &mode)) {
+        of_property_read_u8(np, "spi-mode", &mode) || of_property_read_u32(np, "nleds", &numleds)) {
         dev_err(&spi->dev, "Failed to read device tree properties\n");
         return -EINVAL;
     }
-
     // Configure SPI device
     spi_dev->max_speed_hz = max_speed_hz;
     spi_dev->mode = mode;
 
     // Perform any additional initialization or configuration
+    buff_size = (numleds+2)*sizeof(struct led);
+    buff = kzalloc(buff_size, GFP_KERNEL);
+    for(u32 i = 1; i<buff_size/sizeof(struct led)-1; i++){
+        buff[i].start_sequence = 0x8080909090809080;
+        buff[i].red = convert_number(0);
+        buff[i].green = convert_number(0);
+        buff[i].blue = convert_number(0);
+        buff[i].EOS=0x80000000;
+
+    }
 
     return 0;
 
@@ -96,6 +166,11 @@ ClassError:
 static void tlc59731_remove(struct spi_device *spi)
 {
     // Perform any cleanup or resource release
+    cdev_del(&my_device);
+	device_destroy(my_class, my_device_nr);
+	class_destroy(my_class);
+	unregister_chrdev_region(my_device_nr, 1);
+    kfree(buff);
 
 }
 
@@ -115,33 +190,7 @@ static struct spi_driver tlc59731 = {
     .remove = tlc59731_remove,
 };
 
-static int __init spi_driver_init(void)
-{
-    int ret;
-
-    // Register the SPI driver
-    ret = spi_register_driver(&tlc59731);
-    if (ret < 0) {
-        pr_err("Failed to register SPI driver\n");
-        return ret;
-    }
-
-    return 0;
-}
-
-static void __exit spi_driver_exit(void)
-{
-    cdev_del(&my_device);
-	device_destroy(my_class, my_device_nr);
-	class_destroy(my_class);
-	unregister_chrdev_region(my_device_nr, 1);
-    // Unregister the SPI driver
-    spi_unregister_driver(&tlc59731);
-   
-}
-
-module_init(spi_driver_init);
-module_exit(spi_driver_exit);
+module_spi_driver(tlc59731);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Nikola Cetic and Nemanja Cenic");

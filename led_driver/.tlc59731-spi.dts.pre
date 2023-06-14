@@ -1,3 +1,7 @@
+# 0 "/home/nikola/KONZOLA_ZA_UREDJAJE/ShimmeringDawn/led_driver/tlc59731-spi.dts"
+# 0 "<built-in>"
+# 0 "<command-line>"
+# 1 "/home/nikola/KONZOLA_ZA_UREDJAJE/ShimmeringDawn/led_driver/tlc59731-spi.dts"
 /dts-v1/;
 /plugin/;
 
@@ -10,7 +14,7 @@
         };
     };
     fragment@1 {
-        target = <&spi0>; // Change the target to match your SPI controller
+        target = <&spi0>;
         __overlay__ {
             #address-cells = <1>;
             #size-cells = <0>;
@@ -20,8 +24,9 @@
                 status = "okay";
                 reg = <0>;
                 compatible = "ti,tlc59731";
-                spi-max-frequency = <100000>; // Set the desired maximum frequency
-                spi-mode = <0>; // Set the desired SPI mode
+                spi-max-frequency = <100000>;
+                spi-mode = <0>;
+                nleds = <26>;
             };
         };
     };
