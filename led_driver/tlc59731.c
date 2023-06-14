@@ -30,7 +30,7 @@ struct __attribute__((packed)) led {
     u64 red;
     u64 green;
     u64 blue;
-    u32 EOS;            // 0x80000000
+    u32 EOS;            // 0x00000000
 };
 
 
@@ -51,10 +51,10 @@ static u64 convert_number(u8 number){
     for(int i = 0; i<8;i++){
         bit = number & (mask>>i);
         if(bit){
-            map.array[7-i] = 0b10010000;
+            map.array[i] = 0b10010000;
         }
         else{
-            map.array[7-i] = 0b10000000;
+            map.array[i] = 0b10000000;
         }
     }
 
@@ -65,12 +65,12 @@ static u64 convert_number(u8 number){
 ssize_t tlc59731_write(struct file * filp, const char * user_buff, size_t len, loff_t * ofp){
     u8 temp_buff[20];
     u32 led_index;
-    u8 red,green,blue;
+    u32 red,green,blue;
     u32 to_copy = min(len,sizeof(temp_buff));
     u32 not_copied = copy_from_user(temp_buff, user_buff, to_copy);
     u32 diff = to_copy - not_copied;
 
-    sscanf(temp_buff,"%d %c %c %c",&led_index,&red,&green,&blue);
+    sscanf(temp_buff,"%d %d %d %d",&led_index,&red,&green,&blue);
 
     if(led_index < 1 || led_index >numleds)
         return diff;
@@ -82,6 +82,18 @@ ssize_t tlc59731_write(struct file * filp, const char * user_buff, size_t len, l
     spi_write(spi_dev,buff,buff_size);
 
     return diff;
+}
+
+void initialize_leds(void){
+    for(u32 i = 1; i<buff_size/sizeof(struct led)-1; i++){
+        buff[i].start_sequence = 0x8090809090908080;
+        buff[i].red = convert_number(0);
+        buff[i].green = convert_number(0);
+        buff[i].blue = convert_number(0);
+        buff[i].EOS=0x00000000;
+
+    }
+    spi_write(spi_dev,buff,buff_size);
 }
 
 static struct file_operations fops ={
@@ -143,15 +155,7 @@ static int tlc59731_probe(struct spi_device *spi)
     // Perform any additional initialization or configuration
     buff_size = (numleds+2)*sizeof(struct led);
     buff = kzalloc(buff_size, GFP_KERNEL);
-    for(u32 i = 1; i<buff_size/sizeof(struct led)-1; i++){
-        buff[i].start_sequence = 0x8080909090809080;
-        buff[i].red = convert_number(0);
-        buff[i].green = convert_number(0);
-        buff[i].blue = convert_number(0);
-        buff[i].EOS=0x80000000;
-
-    }
-
+    initialize_leds();
     return 0;
 
 AddError:
@@ -166,6 +170,7 @@ ClassError:
 static void tlc59731_remove(struct spi_device *spi)
 {
     // Perform any cleanup or resource release
+    initialize_leds();
     cdev_del(&my_device);
 	device_destroy(my_class, my_device_nr);
 	class_destroy(my_class);

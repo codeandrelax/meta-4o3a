@@ -7,7 +7,7 @@
 #define NUM_LEDS 26
 
 int main() {
-    int ledFile = open("/dev/leddriver", O_WRONLY);
+    int ledFile = open("/dev/tlc59731", O_WRONLY);
 
     if (ledFile == -1) {
         perror("Failed to open the LED driver file");
@@ -15,7 +15,7 @@ int main() {
     }
 
     // Example values
-    int indices[NUM_LEDS] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25};
+    int indices[NUM_LEDS] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
     int reds[NUM_LEDS];
     int greens[NUM_LEDS];
     int blues[NUM_LEDS];
