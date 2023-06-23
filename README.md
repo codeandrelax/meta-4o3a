@@ -56,7 +56,16 @@ PARALLEL_MAKE = "-j 8"
 where 8 is the number of parallel processes run during build. The lower this number is, thje more time build process will take.
 Aproximately every process takes around 3GB of RAM memory, so adjust this number according to RAM memory available.
 
+# Miscelaneous
 
+To build an image it is neccessary to run:
+```
+MACHINE=imx8mn-var-som bitbake b2qt-embedded-qt6-image
+```
+To write Linux image (wic.bz file) to a SD card it is neccessary to run:
+```
+sudo MACHINE=imx8mn-var-som ../sources/meta-variscite-sdk/scripts/var_mk_yocto_sdcard/var-create-yocto-sdcard.sh /dev/sdb
+```
 
 # StationManagerYOCTO
 
