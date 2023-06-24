@@ -1,0 +1,63 @@
+diff --git a/imx8mn-var-som-symphony.dts.orig b/imx8mn-var-som-symphony.dts
+index a4056b0..9532929 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn-var-som-symphony.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mn-var-som-symphony.dts
+@@ -64,7 +64,6 @@
+ 	leds {
+ 		compatible = "gpio-leds";
+ 		status = "okay";
+-
+ 		heartbeat {
+ 			label = "Heartbeat";
+ 			gpios = <&pca9534 0 GPIO_ACTIVE_HIGH>;
+@@ -91,6 +90,29 @@
+ };
+ 
+ &iomuxc {
++	pinctrl-names = "default";
++    pinctrl-0 = <&pinctrl_gpio>;
++
++	pinctrl_gpio: hoggrp  {
++		fsl,pins = <
++			MX8MN_IOMUXC_UART1_TXD_GPIO5_IO23	0x16
++			MX8MN_IOMUXC_UART3_RXD_GPIO5_IO26	0x16
++			MX8MN_IOMUXC_SAI3_RXFS_GPIO4_IO28	0x16
++			MX8MN_IOMUXC_GPIO1_IO06_GPIO1_IO6	0x16
++			MX8MN_IOMUXC_SAI2_MCLK_GPIO4_IO27	0x16
++		>;
++	};
++
++	pinctrl_ecspi1: ecspi1grp {
++		fsl,pins = <
++							MX8MN_IOMUXC_ECSPI1_SCLK_ECSPI1_SCLK        0x13
++							MX8MN_IOMUXC_ECSPI1_MOSI_ECSPI1_MOSI        0x13
++							MX8MN_IOMUXC_ECSPI1_MISO_ECSPI1_MISO        0x13
++							MX8MN_IOMUXC_GPIO1_IO14_GPIO1_IO14          0x13
++							MX8MN_IOMUXC_GPIO1_IO00_GPIO1_IO0           0x13
++		>;
++	};
++
+ 	pinctrl_captouch: captouchgrp {
+ 		fsl,pins = <
+ 			MX8MN_IOMUXC_SPDIF_RX_GPIO5_IO4			0xc0
+@@ -464,3 +486,20 @@
+ 	vmmc-supply = <&reg_usdhc2_vmmc>;
+ 	status = "okay";
+ };
++
++&ecspi1 {
++ 	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_ecspi1>;
++        cs-gpios = <&gpio1 0 0>;
++        fsl,spi-num-chipselects = <1>;
++        /delete-property/ dmas;
++        /delete-property/ dma-names;
++	status = "okay";
++
++        spidev@0 {
++               compatible = "spidev";
++               spi-max-frequency = <12000000>;
++               reg = <0>;
++        };
++};
++

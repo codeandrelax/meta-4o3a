@@ -1,0 +1,10 @@
+[Unit]
+Description=Test Qt Application
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/testqtapp
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
