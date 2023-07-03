@@ -63,6 +63,20 @@ BBLAYERS ?= " \
    bitbake-layers add_layer "path-to-meta-4o3a"
 ```
 
+# Build
+
+Build begins by executing:
+```
+MACHINE=imx8mn-var-som bitbake b2qt-embedded-qt6-image
+```
+Here MACHINE is defined to be _imx8m-var-som_ board.
+Board used is NXP i.MX 8M Nano.
+
+Once the build is done, to load built image onto micro SD card, the following command is executed:
+```
+sudo MACHINE=imx8mn-var-som ../sources/meta-variscite-sdk/scripts/var_mk_yocto_sdcard/var-create-yocto-sdcard.sh /dev/sdb
+```
+
 # Problems during build
 
 If you experience problems during build (eg. random crashes of Linux terminal) try limiting number of parallel processes ran by bitbake.
