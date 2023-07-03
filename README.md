@@ -10,17 +10,16 @@ meta-4o3a is a layer which adds functionality of Station Manager to Linux build.
 It is neccessary to edit local.conf file located in build-imx8mn-var-som/conf directory.
 
 ```
-IMAGE_INSTALL:append = " mycapp "
-IMAGE_INSTALL:append = " gpio-driver-test "
-IMAGE_INSTALL:append = " myqtapp "
-#IMAGE_INSTALL:append = " testapp "
+IMAGE_INSTALL:append = " testqtapp "
+IMAGE_INSTALL:append = " spitestapp "
+IMAGE_INSTALL:append = " spitestapp2 "
 
 DISTRO_FEATURES:append = " wayland "
 IMAGE_INSTALL:append = " qtbase qtwayland "
 CORE_IMAGE_EXTRA_INSTALL += " wayland weston "
 
-IMAGE_INSTALL:append = " dami-module "
-KERNEL_MODULE_AUTOLOAD += " dami_driver "
+IMAGE_INSTALL:append = " ledmodule "
+KERNEL_MODULE_AUTOLOAD += " tlc59731 "
 
 IMAGE_INSTALL:append = " gpiomodule "
 KERNEL_MODULE_AUTOLOAD += " gpio_driver "
