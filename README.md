@@ -12,6 +12,7 @@ This YOCTO project layer has the following functionality:
 # How to setup a project
 
 Follow the steps given in official Variscite [wiki](https://variwiki.com/index.php?title=B2QT_Build_Release&release=mx8mn-b2qt-kirkstone-5.15-2.0.x-v1.0) tutorial.
+YOCTO project Kirkstone 4.0 uses Boot2QT meta layer. 
 
 After the steps from previous link have been completed, clone this repository (main branch) into sources directory of var-b2qt (so that you get the following path var-b2qt/sources/meta-4o3a)
 
@@ -151,6 +152,10 @@ bitbake-layers create-layer meta-layer_name
 6) Sometimes, when running multiple builds consecutively, some created files may be in an "invalid state". YOCTO will ussualy report back wihich recipe failed. Then that recipe must be cleaned. For example, if recipe _gpiomodule_ failed, it can be cleaned using bitbake with:
 ```
 MACHINE=imx8mn-var-som bitbake -c cleanall gpiomodule
+```
+7) To build a particular recipe, which is useful during development since only the recipe with changes can be build, reducing build time therefore reducing development time, you run:
+```
+MACHINE=imx8mn-var-som bitbake recipe-name
 ```
 # Usefull links
 [VAR-SOM-MX8M-NANO Datasheet](https://www.variscite.com/wp-content/uploads/2020/01/VAR-SOM-MX8M-NANO_Datasheet.pdf)
