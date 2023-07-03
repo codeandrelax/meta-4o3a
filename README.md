@@ -123,6 +123,21 @@ git diff --no-index imx8mn-var-som-symphony.dts.orig imx8mn-var-som-symphony.dts
 ```
 Patching Device-Tree source file is done via git diff and patch is added to a new recipe. [DigiKey - Intro to Embedded Linux](https://www.digikey.com/en/maker/projects/intro-to-embedded-linux-part-5-how-to-enable-i2c-in-the-yocto-project/6843bbf9a83c4c96888fccada1e7aedf)
 
+4) To enable autoboot of an application, Linux service is used. Service refers to a script that runs in the background and performs specific tasks. Services are typically managed by a service manager, such as Systemd or SysVinit, which handles the lifecycle of the services, including starting, stopping, restarting, and monitoring them.
+Autoboot service for testapp is named _testqtapp.service_ and is located in _recipes-applcation/TestQTApp_. This service starts an executable named testqtapp on boot.
+```
+[Unit]
+Description=Test Qt Application
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/testqtapp
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+```
+
 # Usefull links
 
 https://www.variscite.com/product/system-on-module-som/cortex-a53-krait/var-som-mx8m-nano-nxp-i-mx-8m-nano/?utm_source=google&utm_medium=cpc&utm_campaign=291971056&utm_content=651046960526&utm_term=&gclid=Cj0KCQjwmN2iBhCrARIsAG_G2i6JdotD3rt7zlenG8P5_CO0bHn0vWSfMGHIu9___WM57jci2HttU3UaAlCrEALw_wcB
