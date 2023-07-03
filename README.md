@@ -1,8 +1,13 @@
 # Intro
 
 This YOCTO project layer has the following functionality:
-- Adds custom splash screen during Linux boot process - 3o3a logo
-- I
+- Adds custom splash screen during Linux boot process - 4o3a logo
+- Install GPIO module in Linux kernel
+- Install Encoder module in Linux kernel
+- Compile QT test application
+- Autostart test application
+- Manipulate TLC59731 LED driver via SPI protocol
+- Patches Device Tree source files so GPIO pins and SPI peripherals are enabled (register setup)
 
 # How to setup a project
 
