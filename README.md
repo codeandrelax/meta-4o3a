@@ -62,9 +62,7 @@ BBLAYERS ?= " \
 ```
    bitbake-layers add_layer "path-to-meta-4o3a"
 ```
-3) kprint and dmseg
 
-4) creating-layers using bitbake
 
 # Build
 
@@ -137,7 +135,12 @@ Restart=on-failure
 [Install]
 WantedBy=multi-user.target
 ```
+5) During Linux kernel development it's best to use kprint to print out what's happening inside the driver and use dmesg in terminal to show those messages.
 
+4) To create a new layer in YOCTO project using bitbake, one should run:
+```
+bitbake-layers create-layer meta-layer_name
+```
 # Usefull links
 [VAR-SOM-MX8M-NANO Datasheet](https://www.variscite.com/wp-content/uploads/2020/01/VAR-SOM-MX8M-NANO_Datasheet.pdf)
 
