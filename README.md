@@ -28,9 +28,6 @@ DISTRO_FEATURES:append = " wayland "
 IMAGE_INSTALL:append = " qtbase qtwayland "
 CORE_IMAGE_EXTRA_INSTALL += " wayland weston "
 
-IMAGE_INSTALL:append = " ledmodule "
-KERNEL_MODULE_AUTOLOAD += " tlc59731 "
-
 IMAGE_INSTALL:append = " gpiomodule "
 KERNEL_MODULE_AUTOLOAD += " gpio_driver "
 
