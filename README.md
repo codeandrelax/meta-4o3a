@@ -62,6 +62,9 @@ BBLAYERS ?= " \
 ```
    bitbake-layers add_layer "path-to-meta-4o3a"
 ```
+3) kprint and dmseg
+
+4) creating-layers using bitbake
 
 # Build
 
