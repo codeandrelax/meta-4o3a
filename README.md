@@ -104,7 +104,18 @@ Aproximately every process takes around 3GB of RAM memory, so adjust this number
 
 # Miscelaneous
 
-
+1) Development is done on [Symphony-Board](https://www.variscite.com/product/single-board-computers/symphony-board/) with [NXP i.MX 8M Nano](https://www.variscite.com/product/system-on-module-som/cortex-a53-krait/var-som-mx8m-nano-nxp-i-mx-8m-nano/) System-on-Module.
+2) Linux image has built-in tool named _memtool_
+memtool is a command-line utility used for reading and writing values to physical memory addresses. It allows direct access to memory regions, such as memory-mapped I/O (MMIO) regions, system memory, or device memory, from user space.
+This tool enables a user to inspect values stored in configuration registers which is usefull for debuging.
+Path where memtool is stored:
+   ```
+   ./run/medai/rootfs-mmcblk2p1/unit_tests/memtool
+   ```
+To insptect, for example, value of IOMUXC_SAI3_MCLK_SELECT_INPUT (stored at offset 0x303305C0, read reference manual for IMX8M processor) register, execute:
+memtool -32 0x303305C0 1
+3) Patching Linux DTS:
+git diff
 
 # Usefull links
 
