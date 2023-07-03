@@ -140,9 +140,16 @@ WantedBy=multi-user.target
 
 # Usefull links
 [VAR-SOM-MX8M-NANO Datasheet](https://www.variscite.com/wp-content/uploads/2020/01/VAR-SOM-MX8M-NANO_Datasheet.pdf)
+
 [Symphony-Board Datasheet](https://www.variscite.com/wp-content/uploads/2019/07/Symphony-Board_Datasheet.pdf)
+
 [How to use GPIO hog demo presentation](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwil7rTkovL_AhWvgf0HHaeyDcoQFnoECBYQAQ&url=https%3A%2F%2Fcommunity.nxp.com%2Fpwmxy87654%2Fattachments%2Fpwmxy87654%2Fimx-processors%2540tkb%2F5635%2F4%2FHow%2520to%2520use%2520gpio-hog%2520demo.pdf&usg=AOvVaw3NCniX-v8mDmk3v_UmwOPI&opi=89978449)
+
 [Varichite Blog, Varichite Device Tree](https://www.variscite.com/blog/getting-started-with-variscite-device-trees/)
+
 [Varichite Device Tree Webinar](https://www.youtube.com/watch?v=nTyO2_D-NUk)
+
 [Inserting Linux driver in Linux kernel, YOCTO project, video, Shahim Vedaei](https://www.youtube.com/watch?v=DnAbIkry-oA)
+
 [Introduction to Embedded Linux, Digi Key](https://www.youtube.com/watch?v=9vsu67uMcko&list=PLEBQazB0HUyTpoJoZecRK6PpDG31Y7RPB)
+
