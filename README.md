@@ -54,7 +54,7 @@ BBLAYERS ?= " \
   ${BSPDIR}/sources/meta-qt6 \
   ${BSPDIR}/sources/meta-swupdate \
   ${BSPDIR}/sources/meta-virtualization \
-**  ${BSPDIR}/sources/meta-4o3a \**
+  ${BSPDIR}/sources/meta-4o3a \
   "
 ```
 
