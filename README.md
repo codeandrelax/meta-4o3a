@@ -115,7 +115,7 @@ Path where memtool is stored:
    ```
    ./run/medai/rootfs-mmcblk2p1/unit_tests/memtool
    ```
-To inspect, for example, value of IOMUXC_SAI3_MCLK_SELECT_INPUT (stored at offset 0x303305C0, read reference manual for IMX8M processor) register, execute:
+   To inspect, for example, value of IOMUXC_SAI3_MCLK_SELECT_INPUT (stored at offset 0x303305C0, read reference manual for IMX8M processor) register, execute:
 memtool -32 0x303305C0 1
 3) Patching Linux DTS:
 ```
