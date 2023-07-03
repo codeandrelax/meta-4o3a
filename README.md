@@ -72,7 +72,7 @@ MACHINE=imx8mn-var-som bitbake b2qt-embedded-qt6-image
 Here MACHINE is defined to be _imx8m-var-som_ board.
 Board used is NXP i.MX 8M Nano.
 
-Once the build is done, to load built image onto micro SD card, the following command is executed:
+To write Linux image (wic.bz file) to a SD card it is neccessary to run:
 ```
 sudo MACHINE=imx8mn-var-som ../sources/meta-variscite-sdk/scripts/var_mk_yocto_sdcard/var-create-yocto-sdcard.sh /dev/sdb
 ```
@@ -104,14 +104,7 @@ Aproximately every process takes around 3GB of RAM memory, so adjust this number
 
 # Miscelaneous
 
-To build an image it is neccessary to run:
-```
-MACHINE=imx8mn-var-som bitbake b2qt-embedded-qt6-image
-```
-To write Linux image (wic.bz file) to a SD card it is neccessary to run:
-```
-sudo MACHINE=imx8mn-var-som ../sources/meta-variscite-sdk/scripts/var_mk_yocto_sdcard/var-create-yocto-sdcard.sh /dev/sdb
-```
+
 
 # Usefull links
 
