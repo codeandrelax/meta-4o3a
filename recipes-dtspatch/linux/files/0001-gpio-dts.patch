@@ -1,5 +1,5 @@
 diff --git a/imx8mn-var-som-symphony.dts.orig b/imx8mn-var-som-symphony.dts
-index a4056b0..9532929 100644
+index a4056b0..86b3291 100644
 --- a/arch/arm64/boot/dts/freescale/imx8mn-var-som-symphony.dts
 +++ b/arch/arm64/boot/dts/freescale/imx8mn-var-som-symphony.dts
 @@ -64,7 +64,6 @@
@@ -40,7 +40,7 @@ index a4056b0..9532929 100644
  	pinctrl_captouch: captouchgrp {
  		fsl,pins = <
  			MX8MN_IOMUXC_SPDIF_RX_GPIO5_IO4			0xc0
-@@ -464,3 +486,20 @@
+@@ -464,3 +486,21 @@
  	vmmc-supply = <&reg_usdhc2_vmmc>;
  	status = "okay";
  };
@@ -54,10 +54,11 @@ index a4056b0..9532929 100644
 +        /delete-property/ dma-names;
 +	status = "okay";
 +
-+        spidev@0 {
-+               compatible = "spidev";
-+               spi-max-frequency = <12000000>;
++        tlc59731@0 {
++               compatible = "ti,tlc59731";
 +               reg = <0>;
++			   spi-max-frequency = <4000000>; // Set the desired maximum frequency
++			   spi-mode = <0>; // Set the desired SPI mode
++			   nleds = <26>;
 +        };
 +};
-+

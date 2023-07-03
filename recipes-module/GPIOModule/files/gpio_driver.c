@@ -92,8 +92,8 @@ static ssize_t simple_gpio_read(struct file *filp,
     pr_err("ERROR: Not all the bytes have been copied to user\n");
   }
   
-  pr_info("Read function : GPIO_154 = %d \n", gpio_state[0]);
-  pr_info("Read function : GPIO_124 = %d \n", gpio_state[1]);
+  //pr_info("Read function : GPIO_154 = %d \n", gpio_state[0]);
+  //pr_info("Read function : GPIO_124 = %d \n", gpio_state[1]);
   return 0;
 }
 

@@ -6,4 +6,4 @@ QT += gui widgets
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
-SOURCES += TestQTApp.cpp
+SOURCES += TestQTApp.cpp TLC59731.cpp

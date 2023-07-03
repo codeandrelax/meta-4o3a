@@ -8,6 +8,8 @@ DEPENDS += " qtbase wayland "
 
 SRC_URI = "file://TestQTApp.cpp \
 	   file://TestQTApp.pro \
+	   file://TLC59731.cpp \
+	   file://TLC59731.h \
 	   "
 
 TARGET_CC_ARCH += "${LDFLAGS}"

@@ -23,6 +23,25 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <stdint.h>
+#include <errno.h>
+#include <getopt.h>
+#include <time.h>
+#include <sys/ioctl.h>
+#include <linux/ioctl.h>
+#include <linux/types.h>
+#include <linux/spi/spidev.h>
+
+#include "TLC59731.h"
+
+static const char *device = "/dev/spidev0.2";
+static uint32_t mode = 0x20;
+static uint8_t bits = 8;
+static uint32_t speed = 100000;
+static uint16_t delay = 0;
+
+static uint8_t default_rx[BUFFER_SIZE] = {0, };
+
 char state[2];
 
 class CircleWidget : public QWidget {
@@ -58,7 +77,7 @@ protected:
 int CircleWidget::x = 0;
 int CircleWidget::y = 0;
 
-#define BUFFER_SIZE 100
+#define BUFFER_SIZE_ENC 100
 
 class WorkerThread : public QThread {
 public:
@@ -68,17 +87,58 @@ public:
 
         int file_desc_button;
         file_desc_button = open("/dev/simple_gpio_device", O_RDWR);
+	
+	int fd;
+	fd = open(device, O_RDWR);
+	printf("Otvara se SPI fajl\n");
+	if( fd == NULL) printf("NULL JE\n");
+	int ret = 0;
+	
+	uint32_t request;
+	request = mode;
+	ret = ioctl(fd, SPI_IOC_WR_MODE32, &mode);
+	ret = ioctl(fd, SPI_IOC_RD_MODE32, &mode);
 
-        char buffer[BUFFER_SIZE];
+	ret = ioctl(fd, SPI_IOC_WR_BITS_PER_WORD, &bits);
+	ret = ioctl(fd, SPI_IOC_RD_BITS_PER_WORD, &bits);
+
+	ret = ioctl(fd, SPI_IOC_WR_MAX_SPEED_HZ, &speed);
+	ret = ioctl(fd, SPI_IOC_RD_MAX_SPEED_HZ, &speed);
+	
+	uint8_t *rx = default_rx;
+	
+	struct spi_ioc_transfer tr;
+	tr.tx_buf = (unsigned long)LED_buffer;
+	tr.rx_buf = (unsigned long)rx;
+	tr.len = BUFFER_SIZE;
+	tr.delay_usecs = delay;
+	tr.speed_hz = speed;
+	tr.bits_per_word = bits;
+	tr.cs_change = 0;
+
+	initialize_buffer();
+	
+        char buffer[BUFFER_SIZE_ENC];
         while(1){
-            read(file_desc_encoder, buffer, BUFFER_SIZE);
+            read(file_desc_encoder, buffer, BUFFER_SIZE_ENC);
             CircleWidget::x = 3 * atoi(buffer) + 512;
             CircleWidget::y = 100;//(int) 100 * (sin( 2 * 3.14159 * (CircleWidget::x + 1)/ 100 )) + 80;
 
             read(file_desc_button, state, 2);
 
+		setLED(1, 255, 255, 255);
+		setLED(2, 255, 0, 0);
+		setLED(3, 0, 255, 0);
+		setLED(4, 0, 0, 255);
+		setLED(5, 0, 0, 0);
+		setLED(6, 255, 255, 0);
+		setLED(7, 255, 0, 255);
+		setLED(8, 0, 255, 255);
+		ret = ioctl(fd, SPI_IOC_MESSAGE(1), &tr);
+
             usleep(20000);
         }   
+        close(fd);
         close(file_desc_encoder);
         close(file_desc_button);
     }
