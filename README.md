@@ -1,3 +1,8 @@
+# Intro
+
+This YOCTO project layer has the following functionality:
+- Adds custom splash screen during Linux boot process - 3o3a logo
+- I
 
 # How to setup a project
 
