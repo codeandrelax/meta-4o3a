@@ -148,6 +148,10 @@ WantedBy=multi-user.target
 ```
 bitbake-layers create-layer meta-layer_name
 ```
+6) Sometimes, when running multiple builds consecutively, some created files may be in an "invalid state". YOCTO will ussualy report back wihich recipe failed. Then that recipe must be cleaned. For example, if recipe _gpiomodule_ failed, it can be cleaned using bitbake with:
+```
+MACHINE=imx8mn-var-som bitbake -c cleanall gpiomodule
+```
 # Usefull links
 [VAR-SOM-MX8M-NANO Datasheet](https://www.variscite.com/wp-content/uploads/2020/01/VAR-SOM-MX8M-NANO_Datasheet.pdf)
 
