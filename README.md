@@ -115,10 +115,13 @@ Path where memtool is stored:
    ```
    ./run/medai/rootfs-mmcblk2p1/unit_tests/memtool
    ```
-To insptect, for example, value of IOMUXC_SAI3_MCLK_SELECT_INPUT (stored at offset 0x303305C0, read reference manual for IMX8M processor) register, execute:
+To inspect, for example, value of IOMUXC_SAI3_MCLK_SELECT_INPUT (stored at offset 0x303305C0, read reference manual for IMX8M processor) register, execute:
 memtool -32 0x303305C0 1
 3) Patching Linux DTS:
-git diff
+```
+git diff --no-index imx8mn-var-som-symphony.dts.orig imx8mn-var-som-symphony.dts.dts > 0001-gpio-dts.patch
+```
+Patching Device-Tree source file is done via git diff and patch is added to a new recipe. [DigiKey - Intro to Embedded Linux](https://www.digikey.com/en/maker/projects/intro-to-embedded-linux-part-5-how-to-enable-i2c-in-the-yocto-project/6843bbf9a83c4c96888fccada1e7aedf)
 
 # Usefull links
 
