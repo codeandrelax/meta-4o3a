@@ -29,6 +29,39 @@ KERNEL_MODULE_AUTOLOAD += " rotary_driver "
 
 IMAGE_INSTALL:append = " libgpiod libgpiod-tools "
 ```
+**IMPORTANT:** meta-4o3a must be added as a layer in YOCTO project. This can be done in two ways.
+1) Edit conf/bblayers.conf file, add path to meta-4o3a layer
+```
+BBLAYERS ?= " \
+  ${BSPDIR}/sources/poky/meta \
+  ${BSPDIR}/sources/poky/meta-poky \
+  ${BSPDIR}/sources/meta-freescale \
+  ${BSPDIR}/sources/meta-freescale-3rdparty \
+  ${BSPDIR}/sources/meta-freescale-distro \
+  ${BSPDIR}/sources/meta-freescale-ml \
+  ${BSPDIR}/sources/meta-variscite-bsp \
+  ${BSPDIR}/sources/meta-variscite-sdk \
+  ${BSPDIR}/sources/meta-variscite-hab \
+  ${BSPDIR}/sources/meta-openembedded/meta-oe \
+  ${BSPDIR}/sources/meta-openembedded/meta-python \
+  ${BSPDIR}/sources/meta-openembedded/meta-networking \
+  ${BSPDIR}/sources/meta-openembedded/meta-initramfs \
+  ${BSPDIR}/sources/meta-openembedded/meta-multimedia \
+  ${BSPDIR}/sources/meta-openembedded/meta-filesystems \
+  ${BSPDIR}/sources/meta-boot2qt/meta-boot2qt \
+  ${BSPDIR}/sources/meta-boot2qt/meta-boot2qt-distro \
+  ${BSPDIR}/sources/meta-mingw \
+  ${BSPDIR}/sources/meta-qt6 \
+  ${BSPDIR}/sources/meta-swupdate \
+  ${BSPDIR}/sources/meta-virtualization \
+**  ${BSPDIR}/sources/meta-4o3a \**
+  "
+```
+
+2) Use bitbake to add a layer.
+```
+   bitbake-layers add_layer "path-to-meta-4o3a"
+```
 
 # Problems during build
 
@@ -66,37 +99,7 @@ To write Linux image (wic.bz file) to a SD card it is neccessary to run:
 sudo MACHINE=imx8mn-var-som ../sources/meta-variscite-sdk/scripts/var_mk_yocto_sdcard/var-create-yocto-sdcard.sh /dev/sdb
 ```
 
-# StationManagerYOCTO
-
-Board bring-up i pisanje modula za Linux operativni sistem
-
-Buildati Linux OS za NXP i.MX8 8M
-  - Tokom boot runtimea iscrtati sliku
-  - Pri bootanju pokrenuti testnu aplikaciju
-  - omoguciti qt biblioteku u okviru Linux slike
-  - napisati odgovarajuce DTO fajlove koji definisu dodatni hardver na ploci, ovo ukljucuje nekoliko dugmica i enkodera
-
-Razvoj je moguce odraditi na Raspberriju, a zatim kod prilagoditi specificnom hardveru
-
-
-Napisati kernel modul koji koristeci INTERRUPT routine detektuje pritisak dugmica i skladno tome koji taster je pritisnut emulira pritisak odgovarajuceg tastera tastature.
-Npr. pritisnut je prvi taster, to treba da kernel ocita kao da je pritisnut taster 0 na tastaturi i skladno tome drugi broj za svaki sljedeci taster (ili drugo slovo)
-  - Ocitati DTO
-  - Dokumentovati kod
-Razvoj je moguce odraditi na Raspberriju, a zatim kod prilagoditi specificnom hardveru
-
-
-Napisati kernel modul koji koristeci INTERRUPT rutine detektuje zakretaj enkodera i to u kom pravcu se pomjeraj desio i prijavljuje to kernel kao dogadjaj ekvivalentan skrolovanju na misu
-  - Ocitati DTO
-  - Dokumentovati kod
-Razvoj je moguce odraditi na Raspberriju, a zatim kod prilagoditi specificnom hardveru
-
-
-Napisati testnu aplikaciju koja za svaki taster i enkoder ima UI element kojim se validira funkconalnost datog tastera ili enkodera. APlikacija treba da koristi qt biblioteku. Koristiti progres bar za enkoder, pritisak tastera prikazati promjenom boje nekog dijela ekrana
-	- Dokumentovati kod
-	- Na ekranu postaviti dugme za gasenje i dugme za restart (touch screen)
-
-# KORISNI LINKOVI
+# Usefull links
 
 https://www.variscite.com/product/system-on-module-som/cortex-a53-krait/var-som-mx8m-nano-nxp-i-mx-8m-nano/?utm_source=google&utm_medium=cpc&utm_campaign=291971056&utm_content=651046960526&utm_term=&gclid=Cj0KCQjwmN2iBhCrARIsAG_G2i6JdotD3rt7zlenG8P5_CO0bHn0vWSfMGHIu9___WM57jci2HttU3UaAlCrEALw_wcB
 https://variwiki.com/index.php?title=VAR-SOM-MX8M-NANO_B2QT&release=mx8mn-b2qt-kirkstone-5.15-2.0.x-v1.0
