@@ -1,6 +1,6 @@
 # Intro
 
-This YOCTO project layer has the following functionality:
+This YOCTO project 4o3a meta-layer has the following functionality:
 - Adds custom splash screen during Linux boot process - 4o3a logo
 - Install GPIO module in Linux kernel
 - Install Encoder module in Linux kernel
